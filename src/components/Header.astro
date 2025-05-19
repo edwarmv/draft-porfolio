@@ -1,0 +1,33 @@
+---
+import { Settings } from '@lucide/astro';
+const menuItems = [{ name: 'Home' }, { name: 'My work' }, { name: 'Contact' }];
+---
+
+<header class="flex justify-between w-[1024px] mx-auto pt-[40px]">
+  <div class="flex gap-8">
+    <article class="font-bold text-[18px] border p-[5px] rounded-[4px]">
+      EMV
+    </article>
+
+    <nav>
+      <ul class="flex gap-4">
+        {
+          menuItems.map(({ name }) => (
+            <li>
+              <a
+                href="#"
+                class="relative inline-block rounded-md px-2 py-1 transition-all hover:bg-black/10 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-200 sm:px-3 sm:py-2 text-neutral-700 dark:text-neutral-400"
+              >
+                {name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <button>
+    <Settings />
+  </button>
+</header>
