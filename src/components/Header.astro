@@ -10,12 +10,12 @@ const { pathname } = Astro.url;
 ---
 
 <header class="mx-auto flex w-[1024px] justify-between py-[40px]">
-  <div class="flex gap-4">
+  <div class="flex gap-8">
     <a
       href="/"
-      class="cursor-pointer rounded-[4px] border border-neutral-700 p-[5px] text-[18px] font-bold text-neutral-700 hover:bg-neutral-700 hover:text-white dark:border-neutral-400 dark:text-neutral-400 dark:hover:bg-neutral-400 dark:hover:text-black"
+      class="cursor-pointer rounded-[4px] border border-neutral-700 p-[5px] text-[18px] font-bold text-neutral-700 dark:border-neutral-400 dark:text-neutral-400"
     >
-      EMV
+      <span class="emv">EMV</span>
     </a>
 
     <nav>
@@ -43,3 +43,29 @@ const { pathname } = Astro.url;
     <Settings class="duration-200 group-hover:rotate-90" />
   </button>
 </header>
+
+<style>
+  .emv {
+    background: radial-gradient(
+      circle,
+      light-dark(#c71585, #ccff00),
+      light-dark(#40e0d0, #ff00ff)
+    );
+    background-clip: text;
+    color: transparent;
+    animation: gemini 5s linear infinite;
+    background-size: 200% 200%;
+  }
+
+  @keyframes gemini {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    100% {
+      background-position: 0% 0%;
+    }
+  }
+</style>
