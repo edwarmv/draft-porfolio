@@ -1,22 +1,32 @@
 ---
 import { Settings } from '@lucide/astro';
-const menuItems = [{ name: 'Home' }, { name: 'My work' }, { name: 'Contact' }];
+const menuItems = [
+  { name: 'Home', href: '/' },
+  { name: 'My work', href: '/my-work' },
+  { name: 'Contact', href: '/contact' },
+];
+
+const { pathname } = Astro.url;
 ---
 
-<header class="flex justify-between w-[1024px] mx-auto pt-[40px]">
-  <div class="flex gap-8">
-    <article class="font-bold text-[18px] border p-[5px] rounded-[4px]">
+<header class="mx-auto flex w-[1024px] justify-between py-[40px]">
+  <div class="flex gap-4">
+    <a
+      href="/"
+      class="cursor-pointer rounded-[4px] border border-neutral-700 p-[5px] text-[18px] font-bold text-neutral-700 hover:bg-neutral-700 hover:text-white dark:border-neutral-400 dark:text-neutral-400 dark:hover:bg-neutral-400 dark:hover:text-black"
+    >
       EMV
-    </article>
+    </a>
 
     <nav>
       <ul class="flex gap-4">
         {
-          menuItems.map(({ name }) => (
+          menuItems.map(({ name, href }) => (
             <li>
               <a
-                href="#"
-                class="relative inline-block rounded-md px-2 py-1 transition-all hover:bg-black/10 hover:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-200 sm:px-3 sm:py-2 text-neutral-700 dark:text-neutral-400"
+                href={href}
+                class="relative inline-block rounded-md px-2 py-1 text-neutral-700 transition-all hover:bg-black/10 hover:text-neutral-800 aria-[current=page]:bg-black/10 aria-[current=page]:text-neutral-800 sm:px-3 sm:py-2 dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-neutral-200 dark:aria-[current=page]:bg-white/10 dark:aria-[current=page]:text-neutral-200"
+                aria-current={pathname === href ? 'page' : 'false'}
               >
                 {name}
               </a>
@@ -27,7 +37,9 @@ const menuItems = [{ name: 'Home' }, { name: 'My work' }, { name: 'Contact' }];
     </nav>
   </div>
 
-  <button>
-    <Settings />
+  <button
+    class="group cursor-pointer rounded-md p-2 text-neutral-700 hover:bg-black/10 hover:text-neutral-800 dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-neutral-200"
+  >
+    <Settings class="duration-200 group-hover:rotate-90" />
   </button>
 </header>
