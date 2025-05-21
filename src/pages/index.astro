@@ -1,10 +1,41 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { CircleUserRound, Rocket, Globe } from '@lucide/astro';
 ---
 
 <Layout>
-  <p>Content</p>
+  <section class="mb-8 rounded-xl bg-[url(https://placehold.co/1280x720)]">
+    <article class="max-w-[550px] p-8">
+      <h1 class="mb-4 flex gap-4"><CircleUserRound /> INTRODUCTION</h1>
+      <p class="mb-4 text-3xl font-bold">Hi, I'm Edwar 🤘</p>
+      <p class="mb-4">
+        &quot;Passionate <b>Full Stack Web Developer</b> eager to learn and explore
+        all aspects of the tech world, aiming to create meaningful solutions that
+        make people's lives easier.&quot;
+      </p>
+      <div class="rounded-xl p-4 backdrop-blur-md">
+        <p class="mb-4 flex gap-4"><Rocket /> Team Player</p>
+        <p>
+          I'm proactive, collaborative, and enjoy contributing to team
+          efforts—whether it's by proposing solutions, helping others grow, or
+          learning from those around me.
+        </p>
+      </div>
+    </article>
+  </section>
+
+  <article>
+    <h2 class="mb-4 text-2xl font-semibold">About me.</h2>
+    <p class="mb-4">
+      Ever since childhood, I've been fascinated by how things work. My journey
+      began in 2016 when I started studying computer science, where I learned
+      the basics of programming and how computers operate and communicate. Since
+      then, I've continued to explore web technologies on my own and remain
+      committed to that path.
+    </p>
+    <p>
+      I'm a skilled developer who enjoys challenges and isn't afraid to try new
+      things.
+    </p>
+  </article>
 </Layout>
