@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ContactMe from '../components/ContactMe.astro';
 import { CircleUserRound, Rocket, Globe } from '@lucide/astro';
 ---
 
@@ -24,7 +25,7 @@ import { CircleUserRound, Rocket, Globe } from '@lucide/astro';
     </article>
   </section>
 
-  <article>
+  <section class="mb-8">
     <h2 class="mb-4 text-2xl font-semibold">About me.</h2>
     <p class="mb-4">
       Ever since childhood, I've been fascinated by how things work. My journey
@@ -37,5 +38,7 @@ import { CircleUserRound, Rocket, Globe } from '@lucide/astro';
       I'm a skilled developer who enjoys challenges and isn't afraid to try new
       things.
     </p>
-  </article>
+  </section>
+
+  <ContactMe class="mb-8" />
 </Layout>

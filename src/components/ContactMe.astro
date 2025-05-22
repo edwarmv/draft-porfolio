@@ -1,0 +1,85 @@
+---
+import { Send } from '@lucide/astro';
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'section'>;
+
+const attrs = Astro.props;
+---
+
+<section {...attrs}>
+  <h2 class="mb-4 text-2xl font-bold">Contact me.</h2>
+  <p class="mb-4">
+    I'm always eager to explore new opportunities and take on exciting projects.
+    If you have a project in mind, or just want to say hi, feel free to send me
+    a message.
+  </p>
+  <form class="rounded-md border border-black/15 p-5">
+    <div class="name grid">
+      <label for="name">Name<span class="text-red-500">*</span></label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Your Name"
+        required
+      />
+    </div>
+    <div class="email grid">
+      <label for="email">Email<span class="text-red-500">*</span></label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="tim@magic.com"
+        required
+      />
+    </div>
+
+    <div class="message grid">
+      <label for="message">Message<span class="text-red-500">*</span></label>
+      <textarea
+        rows="4"
+        name="message"
+        id="message"
+        placeholder="Hello there, I would like to ask you about..."
+        required></textarea>
+    </div>
+
+    <div class="submit-btn text-right">
+      <button
+        class="group ml-auto inline-flex w-fit items-center rounded-md bg-neutral-200 px-4 py-2 font-medium text-neutral-700 duration-200 hover:bg-neutral-300 disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none dark:bg-white/10 dark:text-white dark:hover:bg-white/15"
+        type="submit"><Send class="mr-2 h-[16px] w-auto" /> Send</button
+      >
+    </div>
+  </form>
+</section>
+
+<style>
+  @reference '../styles/global.css';
+
+  form {
+    display: grid;
+    grid-template:
+      'name email'
+      'message message'
+      'submit-btn submit-btn';
+    gap: 1rem;
+    .name {
+      grid-area: name;
+    }
+    .email {
+      grid-area: email;
+    }
+    .message {
+      grid-area: message;
+    }
+    .submit-btn {
+      grid-area: submit-btn;
+    }
+    input,
+    textarea {
+      @apply my-2 w-full rounded-lg border border-neutral-300 p-2 font-normal text-neutral-800 outline-0 duration-200 focus:border-blue-600 dark:border-neutral-800 dark:bg-transparent dark:text-white focus:dark:border-neutral-700;
+    }
+  }
+</style>
