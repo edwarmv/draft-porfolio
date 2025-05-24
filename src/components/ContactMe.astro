@@ -14,7 +14,11 @@ const attrs = Astro.props;
     If you have a project in mind, or just want to say hi, feel free to send me
     a message.
   </p>
-  <form class="rounded-md border border-black/15 p-5">
+  <form
+    name="contact"
+    data-netlify="true"
+    class="rounded-md border border-black/15 p-5"
+  >
     <div class="name grid">
       <label for="name">Name<span class="text-red-500">*</span></label>
       <input
