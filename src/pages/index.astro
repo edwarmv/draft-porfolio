@@ -55,8 +55,8 @@ import { CircleUserRound, Rocket, Globe, FileText } from '@lucide/astro';
         <a
           href="https://drive.google.com/file/d/1DNHxV3PoitPLw8ZwpFKZZc5o2dsZ1Z_d/view?usp=drive_link"
           target="_blank"
-          class="inline-block cursor-pointer rounded-md bg-[#FF3B00] p-2 text-white"
-          >Download CV <FileText class="inline" /></a
+          class="flex cursor-pointer items-center rounded-md bg-[#FF3B00] p-2 text-white"
+          ><FileText class="mr-1" /> Download CV</a
         >
       </div>
     </article>
@@ -66,6 +66,7 @@ import { CircleUserRound, Rocket, Globe, FileText } from '@lucide/astro';
 </Layout>
 
 <style>
+  /* true */
   .download-cv {
     margin: 0;
     --x: calc(var(--posX, 0) * 1px);
@@ -99,6 +100,7 @@ import { CircleUserRound, Rocket, Globe, FileText } from '@lucide/astro';
 </style>
 
 <script is:inline>
+  const a = true;
   document
     .querySelector('.download-cv')
     .addEventListener('pointermove', (e) => {
