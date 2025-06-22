@@ -1,0 +1,63 @@
+---
+import dayjs from 'dayjs';
+import type { Item } from '../api/github';
+import { contents } from '../api/github';
+import { Link } from '@lucide/astro';
+
+interface Props {
+  item: Item;
+}
+
+const {
+  item: { name, created_at, pushed_at, description, homepage, topics },
+} = Astro.props;
+---
+
+<article>
+  <h3 class="mb-2 text-2xl font-bold">{name}</h3>
+  <p
+    class="my-2 block text-sm leading-none font-normal text-neutral-500 dark:text-neutral-500"
+  >
+    {dayjs(created_at).format('MMMM DD, YYYY')} -{' '}
+    {dayjs(pushed_at).format('MMMM DD, YYYY')}
+  </p>
+  <p class="mt-2 mb-4 text-neutral-700 md:w-3/4 dark:text-neutral-400">
+    {description}
+  </p>
+  <a
+    href={homepage}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="mb-4 block"
+  >
+    <img
+      alt={`${name} screenshot`}
+      class="aspect-video cursor-zoom-in rounded-xl border border-black/10 object-cover object-top duration-200 hover:opacity-70 dark:border-neutral-800"
+      width="1024"
+      height="576"
+      src={(await contents({ repository: name, path: 'screenshots' }))[0]
+        .download_url}
+    />
+  </a>
+  <p class="mb-4 flex flex-wrap gap-2">
+    {
+      topics
+        .filter((topic) => topic !== 'portfolio')
+        .map((topic) => (
+          <span class="flex cursor-default items-center gap-2 rounded-md border border-black/10 px-2 py-1 font-mono text-sm font-medium text-neutral-500 duration-200 hover:bg-black/5 motion-reduce:transition-none dark:border-neutral-800 dark:text-white/50 dark:hover:border-neutral-700 dark:hover:bg-white/5">
+            <i class={`ci ci-${topic} dark:ci-${topic}-light ci-md`} />
+            {topic}
+          </span>
+        ))
+    }
+  </p>
+  <div>
+    <a
+      class="group flex w-fit items-center rounded-md bg-blue-500 px-4 py-2 font-medium text-white duration-200 hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none"
+      target="_blank"
+      href={homepage}
+    >
+      <Link class="mr-2" /> Open Project
+    </a>
+  </div>
+</article>
