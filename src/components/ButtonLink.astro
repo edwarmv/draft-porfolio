@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'a'> {
+  enableTouchEnhancements?: boolean;
+}
+
+const {
+  class: classList = '',
+  enableTouchEnhancements = false,
+  ...attrs
+} = Astro.props;
+---
+
+<a
+  class:list={[
+    'inline-flex h-[40px] cursor-pointer items-center rounded-md px-4 text-neutral-700 hover:bg-black/10 hover:text-neutral-800 dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-neutral-200',
+    classList,
+    enableTouchEnhancements &&
+      'bg-black/10 text-neutral-800 dark:bg-white/10 dark:text-neutral-200',
+  ]}
+  {...attrs}
+>
+  <slot />
+</a>

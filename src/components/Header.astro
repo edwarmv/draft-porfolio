@@ -1,5 +1,7 @@
 ---
-import { Settings } from '@lucide/astro';
+import Button from './Button.astro';
+import ButtonLink from './ButtonLink.astro';
+import { Settings, MenuIcon } from '@lucide/astro';
 const menuItems = [
   { name: 'Home', href: '/' },
   { name: 'My work', href: '/my-work' },
@@ -9,7 +11,9 @@ const menuItems = [
 const { pathname } = Astro.url;
 ---
 
-<header class="mx-auto flex w-[1024px] justify-between py-[40px]">
+<header
+  class="mx-auto flex w-full max-w-[1024px] justify-between px-6 py-[40px]"
+>
   <div class="flex gap-8">
     <a
       href="/"
@@ -19,17 +23,17 @@ const { pathname } = Astro.url;
     </a>
 
     <nav>
-      <ul class="flex gap-4">
+      <ul class="hidden gap-4 md:flex">
         {
           menuItems.map(({ name, href }) => (
             <li>
-              <a
+              <ButtonLink
                 href={href}
-                class="relative inline-block rounded-md px-2 py-1 text-neutral-700 transition-all hover:bg-black/10 hover:text-neutral-800 aria-[current=page]:bg-black/10 aria-[current=page]:text-neutral-800 sm:px-3 sm:py-2 dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-neutral-200 dark:aria-[current=page]:bg-white/10 dark:aria-[current=page]:text-neutral-200"
                 aria-current={pathname === href ? 'page' : 'false'}
+                class="aria-[current=page]:bg-black/10 aria-[current=page]:text-neutral-800 dark:aria-[current=page]:bg-white/10 dark:aria-[current=page]:text-neutral-200"
               >
                 {name}
-              </a>
+              </ButtonLink>
             </li>
           ))
         }
@@ -37,12 +41,43 @@ const { pathname } = Astro.url;
     </nav>
   </div>
 
-  <button
-    class="group cursor-pointer rounded-md p-2 text-neutral-700 hover:bg-black/10 hover:text-neutral-800 dark:text-neutral-400 dark:hover:bg-white/10 dark:hover:text-neutral-200"
-  >
-    <Settings class="duration-200 group-hover:rotate-90" />
-  </button>
+  <div>
+    <Button id="menu-btn">
+      <MenuIcon />
+    </Button>
+
+    <Button class="group">
+      <Settings class="duration-200 group-hover:rotate-90" />
+    </Button>
+  </div>
 </header>
+<div class="absolute inset-0 z-10 -translate-x-full" id="mobile-menu">
+  <section
+    class="h-full w-[90%] max-w-96 border-r border-black/10 bg-white/90 p-6 backdrop-blur-xl duration-200 motion-reduce:transition-none dark:border-neutral-800 dark:bg-[#161617]/70"
+  >
+    <ul class="flex flex-col gap-4">
+      {
+        menuItems.map(({ href, name }) => (
+          <li>
+            <ButtonLink
+              href={href}
+              aria-current={pathname === href ? 'page' : 'false'}
+              enableTouchEnhancements={true}
+              class="w-full aria-[current=page]:text-neutral-800 dark:aria-[current=page]:text-neutral-200"
+            >
+              {name}
+            </ButtonLink>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="absolute top-0 right-0 grid h-full w-6 place-content-center">
+      <span
+        class="inline-block h-[32px] w-[5px] rounded-2xl bg-black/10 dark:bg-white/10"
+      ></span>
+    </div>
+  </section>
+</div>
 
 <style>
   .emv {
@@ -69,3 +104,67 @@ const { pathname } = Astro.url;
     }
   }
 </style>
+
+<script>
+  import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+
+  const MENU_TRANSITION = 'translate 0.3s ease-out';
+
+  function handleMenuClose(mobileMenu: HTMLElement) {
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+
+    mobileMenu.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+      mobileMenu.style.transition = 'none'; // Disable transition during drag
+    });
+
+    mobileMenu.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      currentX = e.touches[0].clientX;
+      const deltaX = currentX - startX;
+      // Ensure menu only moves right (to close)
+      if (deltaX < 0) {
+        mobileMenu.style.translate = `${deltaX}px`;
+      }
+    });
+
+    mobileMenu.addEventListener('touchend', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      mobileMenu.style.transition = MENU_TRANSITION; // Re-enable transition
+
+      const menuWidth = mobileMenu.offsetWidth;
+      const currentTransform = parseFloat(
+        mobileMenu.style.translate.replace('px', ''),
+      );
+
+      if (currentTransform * -1 > (menuWidth * 1) / 4) {
+        // If dragged more than 50%
+        mobileMenu.style.translate = `-${menuWidth}px`; // Close
+        enableBodyScroll(mobileMenu);
+      } else {
+        mobileMenu.style.translate = '0'; // Return to open
+      }
+    });
+  }
+
+  function menuBtnHandleClick() {
+    const mobileMenu = document.querySelector<HTMLDivElement>('#mobile-menu');
+    if (!mobileMenu) {
+      return;
+    }
+    mobileMenu.style.transition = MENU_TRANSITION;
+    // show menu
+    mobileMenu.style.translate = '0';
+    disableBodyScroll(mobileMenu);
+    handleMenuClose(mobileMenu);
+  }
+
+  const menuBtn = document.getElementById('menu-btn');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', menuBtnHandleClick);
+  }
+</script>

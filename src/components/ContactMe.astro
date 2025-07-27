@@ -6,10 +6,16 @@ import { Icon } from 'astro-icon/components';
 
 type Props = HTMLAttributes<'section'>;
 
-const attrs = Astro.props;
+const { class: classList, ...attrs } = Astro.props;
 ---
 
-<section {...attrs}>
+<section
+  class:list={[
+    'rounded-md border border-black/15 bg-white p-5 dark:border-neutral-800 dark:bg-[#161617]',
+    classList,
+  ]}
+  {...attrs}
+>
   <h2 class="mb-4 text-2xl font-bold">Contact me.</h2>
   <p class="mb-4">
     I'm always eager to explore new opportunities and take on exciting projects.

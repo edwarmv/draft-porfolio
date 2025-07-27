@@ -5,9 +5,7 @@ import { CircleUserRound, Rocket, Globe, FileText } from '@lucide/astro';
 ---
 
 <Layout>
-  <section
-    class="mb-8 h-[500px] rounded-xl bg-[url(/images/personal-landscape.webp)]"
-  >
+  <section class="mb-8 rounded-xl bg-[url(/images/personal-landscape.webp)]">
     <article class="grid h-full max-w-[550px] content-between p-8 text-white">
       <div>
         <h1 class="mb-4 flex gap-4"><CircleUserRound /> INTRODUCTION</h1>
@@ -29,7 +27,7 @@ import { CircleUserRound, Rocket, Globe, FileText } from '@lucide/astro';
     </article>
   </section>
 
-  <section class="mb-8 grid grid-cols-2 gap-4">
+  <section class="mb-8 grid gap-4 md:grid-cols-2">
     <article>
       <h2 class="mb-4 text-2xl font-semibold">About me.</h2>
       <p class="mb-4">
@@ -100,7 +98,6 @@ import { CircleUserRound, Rocket, Globe, FileText } from '@lucide/astro';
 </style>
 
 <script is:inline>
-  const a = true;
   document
     .querySelector('.download-cv')
     .addEventListener('pointermove', (e) => {
